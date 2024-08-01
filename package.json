@@ -8,6 +8,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "antd-mobile": "^5.37.1",
+    "antd-mobile-icons": "^0.3.0",
     "axios": "^1.7.2",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.12",
@@ -19,7 +20,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "craco start ",
     "build": "craco build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
-    "json-server": "^1.0.0-beta.1"
+    "json-server": "^1.0.0-beta.1",
+    "sass": "^1.77.8"
   }
 }
