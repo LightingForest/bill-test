@@ -1,10 +1,11 @@
 import { NavBar, DatePicker } from 'antd-mobile'
 import './index.scss'
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import classNames from "classnames";
 import dayjs from "dayjs";
 import {useSelector} from "react-redux";
 import _ from 'lodash'
+import DayBill from "./components/DayBill";
 
 const Month = () => {
     //按月做数据的分组
@@ -35,6 +36,16 @@ const Month = () => {
        }
     }, [currentMonthList]);
 
+    //初始化的时候把当前月的统计数据显示出来
+    useEffect(() => {
+        const nowDate=dayjs(new Date()).format('YYYY-MM')
+        //边界值控制
+        if(monthGroup[nowDate]){
+            setCurrentMonthList(monthGroup[nowDate])
+        }
+
+    }, [monthGroup]);
+
     //确认回调
     const onConfirm=(date)=>{
         setDateVisible(false)
@@ -44,6 +55,16 @@ const Month = () => {
         setCurrentDate(formatDate)
         //其他逻辑
     }
+
+    //当前月按照日来分组
+    const dayGroup = useMemo(() => {
+        const groupData=_.groupBy(currentMonthList,(item)=>dayjs(item.date).format('YYYY-MM-DD'))
+        const keys=Object.keys(groupData)
+        return {
+            groupData,
+            keys
+        }
+    }, [currentMonthList]);
 
     return (
         <div className="monthlyBill">
@@ -87,6 +108,16 @@ const Month = () => {
                         max={new Date()}
                     />
                 </div>
+            {/*    单日列表统计*/}
+                {
+                    dayGroup.keys.map(key=>{
+                        return <DayBill key={key} date={key} billList={dayGroup.groupData[key]}/>
+                        }
+
+                    )
+                }
+
+
             </div>
         </div >
     )
